@@ -12,7 +12,7 @@ import androidx.paging.LoadState
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.kotlin63.R
 import com.example.kotlin63.databinding.FragmentMangaBinding
-import com.example.kotlin63.presentation.ui.adapters.AnimeMangaAdapter
+import com.example.kotlin63.presentation.ui.adapters.KitsuAdapter
 import com.example.kotlin63.presentation.ui.fragments.viewmodel.MangaViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
 class MangaFragment : Fragment(R.layout.fragment_manga) {
 
     private val binding by viewBinding(FragmentMangaBinding::bind)
-    private val mangaAdapter = AnimeMangaAdapter()
+    private val mangaAdapter = KitsuAdapter()
     private val viewModels by viewModels<MangaViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -50,9 +50,8 @@ class MangaFragment : Fragment(R.layout.fragment_manga) {
             adapter = mangaAdapter
         }
     }
-
     private fun subscribe() {
-        viewModels.getManga().observe(viewLifecycleOwner) {
+        viewModels.fetchManga().observe(viewLifecycleOwner) {
             viewLifecycleOwner.lifecycleScope.launch {
                 mangaAdapter.submitData(it)
             }

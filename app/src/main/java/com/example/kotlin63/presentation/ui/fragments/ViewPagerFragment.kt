@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.kotlin63.R
 import com.example.kotlin63.databinding.FragmentViewPagerBinding
-import com.example.kotlin63.presentation.ui.adapters.AnimeMangaViewPagerAdapter
+import com.example.kotlin63.presentation.ui.adapters.KitsuViewPagerAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -21,7 +21,7 @@ class ViewPagerFragment : Fragment(R.layout.fragment_view_pager) {
     }
 
     private fun initialize() {
-        binding.viewPager.adapter = AnimeMangaViewPagerAdapter(this)
+        binding.viewPager.adapter = KitsuViewPagerAdapter(this)
 
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
             when (position) {

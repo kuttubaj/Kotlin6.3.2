@@ -12,7 +12,7 @@ import androidx.paging.LoadState
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.kotlin63.R
 import com.example.kotlin63.databinding.FragmentAnimeBinding
-import com.example.kotlin63.presentation.ui.adapters.AnimeMangaAdapter
+import com.example.kotlin63.presentation.ui.adapters.KitsuAdapter
 import com.example.kotlin63.presentation.ui.fragments.viewmodel.AnimeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
@@ -23,7 +23,7 @@ class AnimeFragment : Fragment(R.layout.fragment_anime) {
 
     private val binding by viewBinding(FragmentAnimeBinding::bind)
     private val viewModel by viewModels<AnimeViewModel>()
-    private val animeAdapter = AnimeMangaAdapter()
+    private val animeAdapter = KitsuAdapter()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
