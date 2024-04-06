@@ -12,7 +12,6 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ViewPagerFragment : Fragment(R.layout.fragment_view_pager) {
-
     private val binding by viewBinding(FragmentViewPagerBinding::bind)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -22,7 +21,6 @@ class ViewPagerFragment : Fragment(R.layout.fragment_view_pager) {
 
     private fun initialize() {
         binding.viewPager.adapter = KitsuViewPagerAdapter(this)
-
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
             when (position) {
                 0 -> {

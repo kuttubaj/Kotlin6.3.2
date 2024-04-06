@@ -3,7 +3,7 @@ package com.example.kotlin63.data.paging.sourse
 import android.net.Uri
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.example.kotlin62.ui.model.Data
+import com.example.kotlin63.data.remote.models.Data
 import com.example.kotlin63.data.remote.apiservice.KitsuApiService
 import okio.IOException
 import retrofit2.HttpException

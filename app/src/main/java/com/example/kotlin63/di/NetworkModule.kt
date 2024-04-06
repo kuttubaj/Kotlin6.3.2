@@ -1,6 +1,7 @@
 package com.example.kotlin63.di
 
 
+import com.example.kotlin63.data.remote.apiservice.DetailApiService
 import com.example.kotlin63.data.remote.apiservice.KitsuApiService
 import dagger.Module
 import dagger.Provides
@@ -21,24 +22,36 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(): OkHttpClient = OkHttpClient().newBuilder().addInterceptor(
-        HttpLoggingInterceptor().setLevel(
-            HttpLoggingInterceptor.Level.BODY
-        )
-    ).connectTimeout(60L, TimeUnit.SECONDS).readTimeout(60L, TimeUnit.SECONDS)
-        .writeTimeout(60L, TimeUnit.SECONDS).callTimeout(60L, TimeUnit.SECONDS).build()
+    fun provideOkhttpClient(): OkHttpClient =
+        OkHttpClient().newBuilder()
+            .addInterceptor(
+                HttpLoggingInterceptor().setLevel(
+                    HttpLoggingInterceptor.Level.BODY
+                )
+            )
+            .connectTimeout(60L, TimeUnit.SECONDS)
+            .readTimeout(60L, TimeUnit.SECONDS)
+            .writeTimeout(60L, TimeUnit.SECONDS)
+            .callTimeout(60L, TimeUnit.SECONDS)
+            .build()
 
     @Provides
     @Singleton
-    fun retrofitClient(okHttpClient: OkHttpClient): Retrofit =
-        Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(
-            GsonConverterFactory.create()
-        )
-            .client(okHttpClient).build()
+    fun retrofitClient(okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
+        .baseUrl(BASE_URL)
+        .addConverterFactory(GsonConverterFactory.create())
+        .client(okHttpClient)
+        .build()
 
     @Provides
     @Singleton
-    fun provideAnimeApi(retrofit: Retrofit): KitsuApiService {
+    fun provideKitsuApiService(retrofit: Retrofit): KitsuApiService {
         return retrofit.create(KitsuApiService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideDetailApiService(retrofit: Retrofit): DetailApiService {
+        return retrofit.create(DetailApiService::class.java)
     }
 }

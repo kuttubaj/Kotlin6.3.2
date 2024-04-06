@@ -1,7 +1,6 @@
 package com.example.kotlin63.data.remote.apiservice
 
-import com.example.kotlin62.ui.model.AnimeResponse
-import com.example.kotlin63.data.remote.kitsumodels.MangaResponse
+import com.example.kotlin63.data.remote.models.KitsyResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -12,11 +11,13 @@ interface KitsuApiService {
 
     @GET(END_POINT_ANIME)
     suspend fun getAnime(
-        @Query("page[offset]") offset: Int, @Query("page[limit]") limit: Int
-    ): AnimeResponse
+        @Query("page[offset]") offset: Int,
+        @Query("page[limit]") limit: Int
+    ): KitsyResponse
 
     @GET(END_POINT_MANGA)
     suspend fun getManga(
-        @Query("page[offset]") offset: Int, @Query("page[limit]") limit: Int
-    ): MangaResponse
+        @Query("page[offset]") offset: Int,
+        @Query("page[limit]") limit: Int
+    ): KitsyResponse
 }

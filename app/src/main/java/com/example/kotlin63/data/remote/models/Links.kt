@@ -1,9 +1,9 @@
-package com.example.kotlin62.ui.model
+package com.example.kotlin63.data.remote.models
 import com.google.gson.annotations.SerializedName
 
 data class Links(
     @SerializedName("next")
-    val next: String,
+    val next: String? = null,
     @SerializedName("last")
     val last: String,
     @SerializedName("prev")
