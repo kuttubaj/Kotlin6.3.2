@@ -3,6 +3,7 @@ package com.example.kotlin63.presentation.ui.fragments.detail
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -28,36 +29,40 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
             viewModel.setId(id)
         }
         subscribeToDetail(view)
+        // Поменять название на более подходящее
         setupListeners()
     }
 
     private fun subscribeToDetail(view: View) {
         viewModel.detailState.observe(viewLifecycleOwner) { uiState ->
             when (uiState) {
-                is UiState.Error -> Log.e("detail", uiState.message, uiState.throwable)
-                UiState.Loading -> Snackbar.make(view, uiState.toString(), Snackbar.LENGTH_SHORT)
-                    .show()
+                is UiState.Error -> uiState.message?.let {
+                    Snackbar.make(
+                        requireView(), it, Snackbar.LENGTH_SHORT
+                    ).show()
+                }
+
+                UiState.Loading -> binding.progressBar.isVisible = true
 
                 is UiState.Success -> {
-                    uiState.data.let {data ->
-                        data?.let {
-                            binding.detaiText.text = it.attributes.description
-                            binding.tvDay.text = it.attributes.startDate
-                            binding.tvName.text = it.attributes.titles?.en
-                            binding.rating.text = it.attributes.ageRating
-                            it.attributes.coverImage?.large?.let {coverImage ->
-                                Log.e("image", "subscribeToDetail: $coverImage", )
-                                Glide.with(binding.fonView).load(coverImage).into(binding.fonView)
-                            }
-                            Glide.with(binding.artView).load(it.attributes.posterImage.large).into(binding.artView)
+                    binding.progressBar.isVisible = false
+                    uiState.data?.let {
+                        binding.detaiText.text = it.attributes.description
+                        binding.tvDay.text = it.attributes.startDate
+                        binding.tvName.text = it.attributes.titles.en
+                        binding.rating.text = it.attributes.ageRating
+                        it.attributes.coverImage?.large?.let { coverImage ->
+                            Glide.with(binding.fonView).load(coverImage).into(binding.fonView)
                         }
+                        Glide.with(binding.artView).load(it.attributes.posterImage.large)
+                            .into(binding.artView)
                     }
                 }
             }
         }
     }
 
-    private fun setupListeners()  {
+    private fun setupListeners() {
         binding.tvBack.setOnClickListener {
             findNavController().navigateUp()
         }

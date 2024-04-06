@@ -21,8 +21,10 @@ class MangaPagingSource(private val animeApi: KitsuApiService) : PagingSource<In
         val position = params.key ?: 1
         return try {
             val response = animeApi.getManga(limit = pageSize, offset = position)
-            val nextPage =
-                Uri.parse(response.links.next).getQueryParameter("page[offset]")!!.toInt()
+            var nextPage = 0
+            Uri.parse(response.links.next).getQueryParameter("page[offset]")?.let {
+                nextPage = it.toInt()
+            }
             LoadResult.Page(
                 data = response.data, prevKey = null, nextKey = nextPage
             )

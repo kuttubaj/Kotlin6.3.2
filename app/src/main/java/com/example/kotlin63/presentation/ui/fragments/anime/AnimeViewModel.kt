@@ -6,8 +6,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class AnimeViewModel
-@Inject constructor(
+class AnimeViewModel @Inject constructor(
     private val repositories: KitsuRepository,
 ) : ViewModel() {
     fun fetchAnime() = repositories.fetchAnime()

@@ -37,11 +37,9 @@ class AnimeFragment : Fragment(R.layout.fragment_anime) {
     }
 
     private fun setupObserver() {
-        lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             viewModel.fetchAnime().collect { data ->
-                lifecycleScope.launch {
-                    animeAdapter.submitData(data)
-                }
+                animeAdapter.submitData(data)
             }
         }
     }
@@ -52,6 +50,7 @@ class AnimeFragment : Fragment(R.layout.fragment_anime) {
                 animeAdapter.loadStateFlow.collect {
                     progressBar.isVisible = it.source.refresh is LoadState.Loading
                     appendProgressBar.isVisible = it.source.append is LoadState.Loading
+                    // Delete
                     prependProgressBar.isVisible = it.source.prepend is LoadState.Loading
                 }
             }

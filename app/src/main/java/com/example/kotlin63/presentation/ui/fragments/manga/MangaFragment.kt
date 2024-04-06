@@ -32,18 +32,17 @@ class MangaFragment : Fragment(R.layout.fragment_manga) {
     }
 
     private fun initialize() = with(binding) {
-        rv.adapter = mangaAdapter
+        rvManga.adapter = mangaAdapter
     }
 
     private fun setupObserver() {
-        lifecycleScope.launch {
-            viewModel.fetchManga().collect {
-                lifecycleScope.launch {
-                    mangaAdapter.submitData(it)
-                }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.fetchManga().collect { data ->
+                mangaAdapter.submitData(data)
             }
         }
     }
+
 
     private fun handlePagingState() = with(binding) {
         viewLifecycleOwner.lifecycleScope.launch {
@@ -51,6 +50,7 @@ class MangaFragment : Fragment(R.layout.fragment_manga) {
                 mangaAdapter.loadStateFlow.collect {
                     progressBar.isVisible = it.source.refresh is LoadState.Loading
                     appendProgress.isVisible = it.source.append is LoadState.Loading
+                    // Delete
                     prependProgress.isVisible = it.source.prepend is LoadState.Loading
                 }
             }

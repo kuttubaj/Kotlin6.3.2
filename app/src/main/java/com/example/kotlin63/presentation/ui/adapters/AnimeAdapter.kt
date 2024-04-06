@@ -27,7 +27,7 @@ class AnimeAdapter(private val onItemClick: (id: String) -> Unit) :
             Glide.with(binding.ivItemAnimeManga.context).load(
                 mangaModule.attributes.posterImage.medium
             ).into(binding.ivItemAnimeManga)
-            binding.tvItemAnimeManga.text = mangaModule.attributes.titles?.en ?: "data missing"
+            binding.tvItemAnimeManga.text = mangaModule.attributes.titles.en ?: mangaModule.attributes.titles.enJp ?: mangaModule.attributes.titles.jaJp
         }
     }
 

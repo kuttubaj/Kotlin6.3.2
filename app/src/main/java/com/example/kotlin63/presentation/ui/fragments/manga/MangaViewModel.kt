@@ -6,8 +6,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class MangaViewModel
-@Inject constructor(
+class MangaViewModel @Inject constructor(
     private val repositories: KitsuRepository,
 ) : ViewModel() {
 
